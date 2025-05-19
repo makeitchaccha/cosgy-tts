@@ -11,7 +11,7 @@ COPY . .
 RUN mvn cllean package -DskipTests
 
 # runtime-base
-FROM eclipse-temurin:21-jre-bookworm AS base
+FROM eclipse-temurin:21-jre-jammy AS base
 WORKDIR /app
 
 # MeCab + OpenJTalk（辞書と音声データなし）
