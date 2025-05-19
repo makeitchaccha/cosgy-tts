@@ -204,7 +204,7 @@ class BotConfig(private val prompt: Prompt) {
         fun <T> overrideTWithEnv(config : Config, configKey : String, envKey: String, configGetter : (config : Config, key : String) -> T, envTransformer : (value : String) -> T) : T {
             val envValue = System.getenv(envKey)
 
-            return if (envValue != "") {
+            return if (envValue != null) {
                 envTransformer(envValue)
             }else{
                 configGetter(config, configKey)
