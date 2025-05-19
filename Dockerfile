@@ -31,6 +31,7 @@ WORKDIR /app
 
 # install required packages
 RUN apt-get update && apt-get install  -y \
+    unzip \
     mecab-ipadic-utf8 \
     open-jtalk-mecab-naist-jdic \
     hts-voice-nitech-jp-atr503-m001 \
