@@ -30,39 +30,46 @@ import kotlin.system.exitProcess
 
 class BotConfig(private val prompt: Prompt) {
     private var path: Path? = null
+
+    // bot.*
     var token: String? = null
+        private set
+    var ownerId: Long = 0
         private set
     var prefix: String? = null
         private set
     private var prefixAlt: String? = null
-    var dictionaryDir: String? = null
+    var game: Activity? = null
         private set
-    var voiceDir: String? = null
+    var status: OnlineStatus? = null
         private set
-    var winJTalkDir: String? = null
+    var inDmHelpEnabled = false
         private set
-    var ownerId: Long = 0
-        private set
+    private var updateAlertEnabled = false
     var autoByeSeconds: Long = -1
         private set
     var maxMessageLength = 0
         private set
-    var status: OnlineStatus? = null
+
+    // openjtalk.*
+    var dictionaryDir: String? = null
         private set
-    var game: Activity? = null
+    var voiceDir: String? = null
         private set
-    private var updateAlertEnabled = false
+    var winExecutableDir: String? = null
+        private set
+
+    // misc.*
+    var utf8Forced = false
+        private set
+    var deeplApiKey: String? = null
+        private set
+
     private var dBots = false
-    var helpToDmEnabled = false
-        private set
     var isValid = false
         private set
 
-    var utf8Forced = false
-        private set
 
-    var deeplApiKey: String? = null
-        private set
 
     fun load() {
         isValid = false
@@ -87,14 +94,14 @@ class BotConfig(private val prompt: Prompt) {
             prefixAlt = overrideStringWithEnv(config, "bot.prefix_alt", "BOT_PREFIX_ALT")
             game = OtherUtil.parseGame(overrideStringWithEnv(config, "bot.game", "BOT_GAME"))
             status = OtherUtil.parseStatus(overrideStringWithEnv(config, "bot.status", "BOT_STATUS"))
-            helpToDmEnabled = overrideBooleanWithEnv(config, "bot.in_dm_help_enabled", "BOT_IN_DM_HELP_ENABLED")
+            inDmHelpEnabled = overrideBooleanWithEnv(config, "bot.in_dm_help_enabled", "BOT_IN_DM_HELP_ENABLED")
             updateAlertEnabled = overrideBooleanWithEnv(config, "bot.update_alert_enabled", "BOT_UPDATE_ALERT_ENABLED")
             autoByeSeconds = overrideLongWithEnv(config, "bot.auto_bye_seconds", "BOT_AUTO_BYE_SECONDS")
             maxMessageLength = overrideIntWithEnv(config, "bot.max_message_length", "BOT_MAX_MESSAGE_LENGTH")
             dictionaryDir = overrideStringWithEnv(config, "openjtalk.dictionary_dir", "OPENJTALK_DICTIONARY_DIR")
             voiceDir = overrideStringWithEnv(config, "openjtalk.voice_dir", "OPENJTALK_VOICE_DIR")
-            winJTalkDir = overrideStringWithEnv(config, "openjtalk.win_executable_dir", "OPENJTALK_WIN_EXECUTABLE_DIR")
-            utf8Forced = overrideBooleanWithEnv(config, "misc.force_utf-8", "MISC_FORCE_UTF_8")
+            winExecutableDir = overrideStringWithEnv(config, "openjtalk.win_executable_dir", "OPENJTALK_WIN_EXECUTABLE_DIR")
+            utf8Forced = overrideBooleanWithEnv(config, "misc.utf8_forced", "MISC_UTF8_FORCED")
             deeplApiKey = overrideStringWithEnv(config, "misc.deepl_api_key", "MISC_DEEPL_API_KEY")
             dBots = ownerId == 334091398263341056
             var write = false

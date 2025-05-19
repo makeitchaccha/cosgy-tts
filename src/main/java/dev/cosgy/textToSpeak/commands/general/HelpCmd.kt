@@ -53,7 +53,7 @@ class HelpCmd(var bot: Bot) : SlashCommand() {
         if (event.client.serverInvite != null) builder.append("\n\nさらにヘルプが必要な場合は、公式サーバーに参加することもできます: ")
             .append(event.client.serverInvite)
         eBuilder.setDescription(builder)
-        if (bot.config.helpToDmEnabled) {
+        if (bot.config.inDmHelpEnabled) {
             event.user.openPrivateChannel()
                 .flatMap { channel: PrivateChannel -> channel.sendMessageEmbeds(eBuilder.build()) }.queue()
         } else {
@@ -83,7 +83,7 @@ class HelpCmd(var bot: Bot) : SlashCommand() {
         if (event.client.serverInvite != null) builder.append("\n\nさらにヘルプが必要な場合は、公式サーバーに参加することもできます: ")
             .append(event.client.serverInvite)
         eBuilder.setDescription(builder)
-        if (bot.config.helpToDmEnabled) {
+        if (bot.config.inDmHelpEnabled) {
             event.author.openPrivateChannel()
                 .flatMap { channel: PrivateChannel -> channel.sendMessageEmbeds(eBuilder.build()) }.queue()
         } else {
