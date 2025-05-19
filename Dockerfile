@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
 
 
 # runtime-full with dictionary + hts-voices
@@ -52,4 +52,4 @@ RUN wget https://github.com/icn-lab/htsvoice-tohoku-f01/archive/refs/heads/maste
     mv htsvoice-tohoku-f01/htsvoice-tohoku-f01-master/*.htsvoice /usr/share/hts-voice/ && \
     rm -R htsvoice-tohoku-f01.zip htsvoice-tohoku-f01
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
