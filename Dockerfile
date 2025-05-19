@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     open-jtalk \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/*-All.jar app.jar
 CMD ["java", "-jar", "app.jar"]
 
 
