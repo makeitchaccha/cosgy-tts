@@ -1,5 +1,9 @@
 name: Build and Push Docker Images
 
+permissions:
+  contents: read
+  packages: write
+
 on:
   push:
 
@@ -36,14 +40,17 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest
-            type=raw,value=latest-full
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=semver,pattern={{version}}-full
+            type=raw
             type=ref,event=branch
             type=ref,event=branch,suffix=-full
+            type=semver,pattern={{version}}
+            type=semver,pattern={{version}},suffix=-full
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}.{{minor}},suffix=-full
+            type=semver,pattern={{major}}
+            type=semver,pattern={{major}},suffix=-full
+            type=sha,prefix
+            type=sha,prefix,suffix=-full
 
       - name: Extract Docker metadata (base)
         id: meta_base
@@ -51,11 +58,12 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest-base
+            type=raw,suffix=-base
+            type=ref,event=branch,suffix=-base
             type=semver,pattern={{version}}-base
             type=semver,pattern={{major}}.{{minor}}-base
             type=semver,pattern={{major}}-base
-            type=ref,event=branch,suffix=-base
+            type=sha,prefix,suffix=-base
 
       - name: Build and push BASE image
         uses: docker/build-push-action@v5
