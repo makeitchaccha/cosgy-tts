@@ -64,6 +64,8 @@ jobs:
           file: ./Dockerfile
           target: full
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta_full.outputs.tags }}
 
@@ -74,5 +76,7 @@ jobs:
           file: ./Dockerfile
           target: slim
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta_base.outputs.tags }}
