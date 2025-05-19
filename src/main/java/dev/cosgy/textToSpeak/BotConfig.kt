@@ -34,31 +34,31 @@ class BotConfig(private val prompt: Prompt) {
         private set
     var prefix: String? = null
         private set
-    private var altprefix: String? = null
-    var dictionary: String? = null
+    private var prefixAlt: String? = null
+    var dictionaryDir: String? = null
         private set
-    var voiceDirectory: String? = null
+    var voiceDir: String? = null
         private set
     var winJTalkDir: String? = null
         private set
     var ownerId: Long = 0
         private set
-    var aloneTimeUntilStop: Long = 0
+    var autoByeSeconds: Long = -1
         private set
-    var maxMessageCount = 0
+    var maxMessageLength = 0
         private set
     var status: OnlineStatus? = null
         private set
     var game: Activity? = null
         private set
-    private var updatealerts = false
+    private var updateAlertEnabled = false
     private var dBots = false
-    var helpToDm = false
+    var helpToDmEnabled = false
         private set
     var isValid = false
         private set
 
-    var isForceUTF8 = false
+    var utf8Forced = false
         private set
 
     var deeplApiKey: String? = null
@@ -84,18 +84,18 @@ class BotConfig(private val prompt: Prompt) {
             token = overrideStringWithEnv(config, "bot.token", "BOT_TOKEN")
             ownerId = overrideLongWithEnv(config, "bot.owner", "BOT_OWNER")
             prefix = overrideStringWithEnv(config, "bot.prefix", "BOT_PREFIX")
-            altprefix = overrideStringWithEnv(config, "bot.prefix_alt", "BOT_PREFIX_ALT")
+            prefixAlt = overrideStringWithEnv(config, "bot.prefix_alt", "BOT_PREFIX_ALT")
             game = OtherUtil.parseGame(overrideStringWithEnv(config, "bot.game", "BOT_GAME"))
             status = OtherUtil.parseStatus(overrideStringWithEnv(config, "bot.status", "BOT_STATUS"))
-            helpToDm = overrideBooleanWithEnv(config, "bot.in_dm_help", "BOT_IN_DM_HELP")
-            updatealerts = overrideBooleanWithEnv(config, "bot.update_alert", "BOT_UPDATE_ALERT")
-            aloneTimeUntilStop = overrideLongWithEnv(config, "bot.auto_bye_seconds", "BOT_AUTO_BYE_SECONDS")
-            maxMessageCount = overrideIntWithEnv(config, "bot.max_message_length", "BOT_MAX_MESSAGE_LENGTH")
-            dictionary = overrideStringWithEnv(config, "openjtalk.dictionary_dir", "OPENJTALK_DICTIONARY_DIR")
-            voiceDirectory = overrideStringWithEnv(config, "openjtalk.voice_dir", "OPENJTALK_VOICE_DIR")
+            helpToDmEnabled = overrideBooleanWithEnv(config, "bot.in_dm_help_enabled", "BOT_IN_DM_HELP_ENABLED")
+            updateAlertEnabled = overrideBooleanWithEnv(config, "bot.update_alert_enabled", "BOT_UPDATE_ALERT_ENABLED")
+            autoByeSeconds = overrideLongWithEnv(config, "bot.auto_bye_seconds", "BOT_AUTO_BYE_SECONDS")
+            maxMessageLength = overrideIntWithEnv(config, "bot.max_message_length", "BOT_MAX_MESSAGE_LENGTH")
+            dictionaryDir = overrideStringWithEnv(config, "openjtalk.dictionary_dir", "OPENJTALK_DICTIONARY_DIR")
+            voiceDir = overrideStringWithEnv(config, "openjtalk.voice_dir", "OPENJTALK_VOICE_DIR")
             winJTalkDir = overrideStringWithEnv(config, "openjtalk.win_executable_dir", "OPENJTALK_WIN_EXECUTABLE_DIR")
-            isForceUTF8 = overrideBooleanWithEnv(config, "misc.force_utf-8", "MISC_FORCE_UTF_8")
-            deeplApiKey = overrideStringWithEnv(config, "mics.deepl_api_key", "MISC_DEEPL_API_KEY")
+            utf8Forced = overrideBooleanWithEnv(config, "misc.force_utf-8", "MISC_FORCE_UTF_8")
+            deeplApiKey = overrideStringWithEnv(config, "misc.deepl_api_key", "MISC_DEEPL_API_KEY")
             dBots = ownerId == 334091398263341056
             var write = false
 
@@ -190,10 +190,10 @@ class BotConfig(private val prompt: Prompt) {
     val configLocation: String
         get() = path!!.toFile().absolutePath
     val altPrefix: String?
-        get() = if ("NONE".equals(altprefix, ignoreCase = true)) null else altprefix
+        get() = if ("NONE".equals(prefixAlt, ignoreCase = true)) null else prefixAlt
 
     fun useUpdateAlerts(): Boolean {
-        return updatealerts
+        return updateAlertEnabled
     }
 
     companion object {
