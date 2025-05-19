@@ -49,7 +49,7 @@ RUN wget https://sourceforge.net/projects/mmdagent/files/MMDAgent_Example/MMDAge
 # tohoku by icn-lab
 RUN wget https://github.com/icn-lab/htsvoice-tohoku-f01/archive/refs/heads/master.zip -O htsvoice-tohoku-f01.zip && \
     unzip htsvoice-tohoku-f01.zip && \
-    mv htsvoice-tohoku-f01/htsvoice-tohoku-f01-master/*.htsvoice /usr/share/hts-voice/ && \
+    mv htsvoice-tohoku-f01/*.htsvoice /usr/share/hts-voice/ && \
     rm -R htsvoice-tohoku-f01.zip htsvoice-tohoku-f01
 
 CMD ["java", "-jar", "app.jar"]
