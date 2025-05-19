@@ -27,8 +27,8 @@ class AloneInVoiceHandler(private val bot: Bot) {
     private val aloneSince = HashMap<Long, Instant>()
     private var aloneTimeUntilStop: Long = 0
     fun init() {
-        aloneTimeUntilStop = bot.config.aloneTimeUntilStop
-        if (aloneTimeUntilStop > 0) bot.threadpool.scheduleWithFixedDelay({ this.check() }, 0, 5, TimeUnit.SECONDS)
+        aloneTimeUntilStop = bot.config.autoByeSeconds
+        if (aloneTimeUntilStop >= 0) bot.threadpool.scheduleWithFixedDelay({ this.check() }, 0, 5, TimeUnit.SECONDS)
     }
 
     private fun check() {

@@ -24,7 +24,6 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.channel.concrete.PrivateChannel
 import org.slf4j.LoggerFactory
 import java.awt.Color
-import java.util.*
 
 class HelpCmd(var bot: Bot) : SlashCommand() {
     init {
@@ -54,7 +53,7 @@ class HelpCmd(var bot: Bot) : SlashCommand() {
         if (event.client.serverInvite != null) builder.append("\n\nさらにヘルプが必要な場合は、公式サーバーに参加することもできます: ")
             .append(event.client.serverInvite)
         eBuilder.setDescription(builder)
-        if (bot.config.helpToDm) {
+        if (bot.config.helpToDmEnabled) {
             event.user.openPrivateChannel()
                 .flatMap { channel: PrivateChannel -> channel.sendMessageEmbeds(eBuilder.build()) }.queue()
         } else {
@@ -84,7 +83,7 @@ class HelpCmd(var bot: Bot) : SlashCommand() {
         if (event.client.serverInvite != null) builder.append("\n\nさらにヘルプが必要な場合は、公式サーバーに参加することもできます: ")
             .append(event.client.serverInvite)
         eBuilder.setDescription(builder)
-        if (bot.config.helpToDm) {
+        if (bot.config.helpToDmEnabled) {
             event.author.openPrivateChannel()
                 .flatMap { channel: PrivateChannel -> channel.sendMessageEmbeds(eBuilder.build()) }.queue()
         } else {
