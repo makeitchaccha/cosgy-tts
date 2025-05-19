@@ -34,7 +34,6 @@ RUN apt-get update && apt-get install  -y \
     unzip \
     mecab-ipadic-utf8 \
     open-jtalk-mecab-naist-jdic \
-    hts-voice-nitech-jp-atr503-m001 \
     && rm -rf /var/lib/apt/lists/*
 
 # install voices
@@ -43,6 +42,7 @@ RUN mkdir -p /usr/share/hts-voice
 RUN wget https://sourceforge.net/projects/mmdagent/files/MMDAgent_Example/MMDAgent_Example-1.8/MMDAgent_Example-1.8.zip && \
     unzip MMDAgent_Example-1.8.zip && \
     mv MMDAgent_Example-1.8/Voice/mei/*.htsvoice /usr/share/hts-voice/ && \
-    mv MMDAgent_Example-1.8/Voice/takumi/*.htsvoice /usr/share/hts-voice/
+    mv MMDAgent_Example-1.8/Voice/takumi/*.htsvoice /usr/share/hts-voice/ && \
+    rm -R MMDAgent_Example-1.8.zip MMDAgent_Example-1.8
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
