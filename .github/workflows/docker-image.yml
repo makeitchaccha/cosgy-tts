@@ -40,7 +40,6 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=raw
             type=ref,event=branch
             type=ref,event=branch,suffix=-full
             type=semver,pattern={{version}}
@@ -58,7 +57,6 @@ jobs:
         with:
           images: ${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,suffix=-base
             type=ref,event=branch,suffix=-base
             type=semver,pattern={{version}}-base
             type=semver,pattern={{major}}.{{minor}}-base
