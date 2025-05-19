@@ -15,6 +15,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 package dev.cosgy.textToSpeak
 
+import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
 import com.typesafe.config.ConfigFactory
 import dev.cosgy.textToSpeak.entities.Prompt
@@ -78,21 +79,23 @@ class BotConfig(private val prompt: Prompt) {
             // load in the config file, plus the default values
             //Config = ConfigFactory.parseFile(path.toFile()).withFallback(ConfigFactory.load());
             val config = ConfigFactory.load()
-            token = config.getString("token")
-            prefix = config.getString("prefix")
-            altprefix = config.getString("altprefix")
-            ownerId = if (config.getAnyRef("owner") is String) 0L else config.getLong("owner")
-            game = OtherUtil.parseGame(config.getString("game"))
-            status = OtherUtil.parseStatus(config.getString("status"))
-            updatealerts = config.getBoolean("updatealerts")
-            dictionary = config.getString("dictionary")
-            voiceDirectory = config.getString("voiceDirectory")
-            aloneTimeUntilStop = config.getLong("alonetimeuntilstop")
-            maxMessageCount = config.getInt("maxmessagecount")
-            winJTalkDir = config.getString("winjtalkdir")
-            helpToDm = config.getBoolean("helptodm")
-            isForceUTF8 = config.getBoolean("forceutf-8")
-            deeplApiKey = config.getString("deeplapikey")
+            config.checkValid(ConfigFactory.defaultReference())
+
+            token = overrideStringWithEnv(config, "token", "TOKEN")
+            prefix = overrideStringWithEnv(config, "prefix", "PREFIX")
+            altprefix = overrideStringWithEnv(config, "altprefix", "ALTPREFIX")
+            ownerId = overrideLongWithEnv(config, "owner", "OWNER")
+            game = OtherUtil.parseGame(overrideStringWithEnv(config, "game", "GAME"))
+            status = OtherUtil.parseStatus(overrideStringWithEnv(config, "status", "STATUS"))
+            updatealerts = overrideBooleanWithEnv(config, "updatealerts", "UPDATEALERTS")
+            dictionary = overrideStringWithEnv(config, "dictionary", "DICTIONARY")
+            voiceDirectory = overrideStringWithEnv(config, "voiceDirectory", "VOICEDIRECTORY")
+            aloneTimeUntilStop = overrideLongWithEnv(config, "alonetimeuntilstop", "ALONETIMEUNTILSTOP")
+            maxMessageCount = overrideIntWithEnv(config, "maxmessagecount", "MAXMESSAGECOUNT")
+            winJTalkDir = overrideStringWithEnv(config, "winjtalkdir", "WINJTALKDIR")
+            helpToDm = overrideBooleanWithEnv(config, "helptodm", "HELMTODM")
+            isForceUTF8 = overrideBooleanWithEnv(config, "forceutf-8", "FORCEUTF_8")
+            deeplApiKey = overrideStringWithEnv(config, "deeplapikey", "DEEPLAPIKEY")
             dBots = ownerId == 334091398263341056
             var write = false
 
@@ -197,5 +200,45 @@ class BotConfig(private val prompt: Prompt) {
         private const val CONTEXT = "Config"
         private const val START_TOKEN = "/// START OF TEXT TO SPEAK BOT CONFIG ///"
         private const val END_TOKEN = "/// END OF TEXT TO SPEAK BOT CONFIG ///"
+
+        fun <T> overrideTWithEnv(config : Config, configKey : String, envKey: String, configGetter : (config : Config, key : String) -> T, envTransformer : (value : String) -> T) : T {
+            val envValue = System.getenv(envKey)
+
+            return if (envValue != null) {
+                envTransformer(envValue)
+            }else{
+                configGetter(config, configKey)
+            }
+        }
+
+        fun overrideStringWithEnv(config : Config, configKey : String, envKey: String) : String {
+            return overrideTWithEnv(config, configKey, envKey,
+                fun(config, key) = config.getString(key),
+                fun(value) = value
+            )
+        }
+
+        fun overrideBooleanWithEnv(config : Config, configKey : String, envKey: String) : Boolean {
+            return overrideTWithEnv(config, configKey, envKey,
+                fun(config, key) = config.getBoolean(key),
+                fun(value) = value.toBooleanStrict()
+            )
+        }
+
+        fun overrideIntWithEnv(config : Config, configKey : String, envKey: String) : Int {
+            return overrideTWithEnv(config, configKey, envKey,
+                fun(config, key) = config.getInt(key),
+                fun(value) = value.toInt()
+            )
+        }
+
+        fun overrideLongWithEnv(config : Config, configKey : String, envKey: String) : Long {
+            return overrideTWithEnv(config, configKey, envKey,
+                fun(config, key) = config.getLong(key),
+                fun(value) = value.toLong()
+            )
+        }
+
+
     }
 }
