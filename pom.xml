@@ -178,6 +178,31 @@
             <artifactId>jsoup</artifactId>
             <version>1.15.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-core</artifactId>
+            <version>1.0.0-beta-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-dao</artifactId>
+            <version>1.0.0-beta-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.exposed</groupId>
+            <artifactId>exposed-jdbc</artifactId>
+            <version>1.0.0-beta-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.44.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -277,8 +302,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <kotlin.version>1.9.22</kotlin.version>
-        <kotlin.compiler.languageVersion>2.0</kotlin.compiler.languageVersion>
+        <kotlin.version>2.1.21</kotlin.version>
+        <kotlin.compiler.languageVersion>2.1</kotlin.compiler.languageVersion>
     </properties>
 
 </project>
