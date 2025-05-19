@@ -8,7 +8,7 @@ RUN mvn dependency:go-offline -B
 
 # build
 COPY . .
-RUN mvn clean package -DskipTests
+RUN mvn install -DskipTests
 
 # runtime-base
 FROM eclipse-temurin:21-jre-jammy AS base
