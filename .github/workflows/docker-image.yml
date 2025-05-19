@@ -57,6 +57,18 @@ jobs:
             type=semver,pattern={{major}}-base
             type=ref,event=branch,suffix=-base
 
+      - name: Build and push BASE image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          target: base
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: ${{ env.PLATFORMS }}
+          tags: ${{ steps.meta_base.outputs.tags }}
+
       - name: Build and push FULL image
         uses: docker/build-push-action@v5
         with:
@@ -68,15 +80,3 @@ jobs:
           cache-to: type=gha,mode=max
           platforms: ${{ env.PLATFORMS }}
           tags: ${{ steps.meta_full.outputs.tags }}
-
-      - name: Build and push SLIM image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          target: slim
-          push: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          platforms: ${{ env.PLATFORMS }}
-          tags: ${{ steps.meta_base.outputs.tags }}
