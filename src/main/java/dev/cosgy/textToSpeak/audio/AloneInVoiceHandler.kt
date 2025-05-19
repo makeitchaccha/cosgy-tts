@@ -25,16 +25,16 @@ import java.util.function.Consumer
 
 class AloneInVoiceHandler(private val bot: Bot) {
     private val aloneSince = HashMap<Long, Instant>()
-    private var aloneTimeUntilStop: Long = 0
+    private var autoByeSeconds: Long = 0
     fun init() {
-        aloneTimeUntilStop = bot.config.autoByeSeconds
-        if (aloneTimeUntilStop >= 0) bot.threadpool.scheduleWithFixedDelay({ this.check() }, 0, 5, TimeUnit.SECONDS)
+        autoByeSeconds = bot.config.autoByeSeconds
+        if (autoByeSeconds >= 0) bot.threadpool.scheduleWithFixedDelay({ this.check() }, 0, 5, TimeUnit.SECONDS)
     }
 
     private fun check() {
         val toRemove: MutableSet<Long> = HashSet()
         for ((key, value) in aloneSince) {
-            if (value.epochSecond > Instant.now().epochSecond - aloneTimeUntilStop) continue
+            if (value.epochSecond > Instant.now().epochSecond - autoByeSeconds) continue
             val guild = bot.jda?.getGuildById(key)
             if (guild == null) {
                 toRemove.add(key)
@@ -48,7 +48,7 @@ class AloneInVoiceHandler(private val bot: Bot) {
     }
 
     fun onVoiceUpdate(event: GuildVoiceUpdateEvent) {
-        if (aloneTimeUntilStop <= 0) return
+        if (autoByeSeconds <= 0) return
         val guild = event.entity.guild
         if (!bot.playerManager.hasHandler(guild)) return
         val alone = isAlone(guild)
