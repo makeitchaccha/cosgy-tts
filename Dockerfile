@@ -1,5 +1,5 @@
 # two stage build
-FROM maven:3.9-eclipse-termurin-21 AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
 
 # solve dependency
