@@ -39,10 +39,17 @@ RUN apt-get update && apt-get install  -y \
 # install voices
 RUN mkdir -p /usr/share/hts-voice
 
+# mei & takumi by MMDAgent
 RUN wget https://sourceforge.net/projects/mmdagent/files/MMDAgent_Example/MMDAgent_Example-1.8/MMDAgent_Example-1.8.zip && \
     unzip MMDAgent_Example-1.8.zip && \
     mv MMDAgent_Example-1.8/Voice/mei/*.htsvoice /usr/share/hts-voice/ && \
     mv MMDAgent_Example-1.8/Voice/takumi/*.htsvoice /usr/share/hts-voice/ && \
     rm -R MMDAgent_Example-1.8.zip MMDAgent_Example-1.8
+
+# tohoku by icn-lab
+RUN wget https://github.com/icn-lab/htsvoice-tohoku-f01/archive/refs/heads/master.zip -O htsvoice-tohoku-f01.zip && \
+    unzip htsvoice-tohoku-f01.zip && \
+    mv htsvoice-tohoku-f01/htsvoice-tohoku-f01-master/*.htsvoice /usr/share/hts-voice/ && \
+    rm -R htsvoice-tohoku-f01.zip htsvoice-tohoku-f01
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
