@@ -51,6 +51,15 @@ class BotConfig(private val prompt: Prompt) {
     var maxMessageLength = 0
         private set
 
+    // database.*
+    var autoMigrationEnabled = false
+        private set
+    var databaseDriver: String = ""
+        private set
+    var databaseUser: String = ""
+        private set
+    var databasePassword: String = ""
+
     // openjtalk.*
     var dictionaryDir: String? = null
         private set
@@ -98,6 +107,10 @@ class BotConfig(private val prompt: Prompt) {
             updateAlertEnabled = overrideBooleanWithEnv(config, "bot.update_alert_enabled", "BOT_UPDATE_ALERT_ENABLED")
             autoByeSeconds = overrideLongWithEnv(config, "bot.auto_bye_seconds", "BOT_AUTO_BYE_SECONDS")
             maxMessageLength = overrideIntWithEnv(config, "bot.max_message_length", "BOT_MAX_MESSAGE_LENGTH")
+            autoMigrationEnabled = overrideBooleanWithEnv(config, "database.auto_migration_enabled", "DATABASE_AUTO_MIGRATION_ENABLED")
+            databaseDriver = overrideStringWithEnv(config, "database.driver", "DATABASE_DRIVER")
+            databaseUser = overrideStringWithEnv(config, "database.user", "DATABASE_USER")
+            databasePassword = overrideStringWithEnv(config, "database.password", "DATABASE_PASSWORD")
             dictionaryDir = overrideStringWithEnv(config, "openjtalk.dictionary_dir", "OPENJTALK_DICTIONARY_DIR")
             voiceDir = overrideStringWithEnv(config, "openjtalk.voice_dir", "OPENJTALK_VOICE_DIR")
             winExecutableDir = overrideStringWithEnv(config, "openjtalk.win_executable_dir", "OPENJTALK_WIN_EXECUTABLE_DIR")
