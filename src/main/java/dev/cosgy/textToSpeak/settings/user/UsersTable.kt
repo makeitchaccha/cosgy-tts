@@ -1,7 +1,6 @@
-package dev.cosgy.textToSpeak.settings.persistence
+package dev.cosgy.textToSpeak.settings.user
 
 import org.jetbrains.exposed.v1.core.Column
-import org.jetbrains.exposed.v1.core.Table
 import org.jetbrains.exposed.v1.core.dao.id.EntityID
 import org.jetbrains.exposed.v1.core.dao.id.IdTable
 
