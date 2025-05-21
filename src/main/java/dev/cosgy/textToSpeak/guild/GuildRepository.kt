@@ -1,6 +1,4 @@
-package dev.cosgy.textToSpeak.settings.guild
-
-import dev.cosgy.textToSpeak.settings.user.User
+package dev.cosgy.textToSpeak.guild
 
 interface GuildRepository {
     suspend fun find(id: Long): Guild?

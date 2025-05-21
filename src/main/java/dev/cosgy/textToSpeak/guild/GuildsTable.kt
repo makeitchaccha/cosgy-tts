@@ -1,8 +1,8 @@
-package dev.cosgy.textToSpeak.settings.guild
+package dev.cosgy.textToSpeak.guild
 
-import dev.cosgy.textToSpeak.settings.guild.GuildsTable.convertTtsAuthorNameModeToEnum
-import dev.cosgy.textToSpeak.settings.guild.GuildsTable.ttsAuthorNameMode
-import dev.cosgy.textToSpeak.settings.user.UsersTable
+import dev.cosgy.textToSpeak.guild.GuildsTable.convertTtsAuthorNameModeToEnum
+import dev.cosgy.textToSpeak.guild.GuildsTable.ttsAuthorNameMode
+import dev.cosgy.textToSpeak.user.UsersTable
 import org.jetbrains.exposed.v1.core.ResultRow
 import org.jetbrains.exposed.v1.core.Table
 

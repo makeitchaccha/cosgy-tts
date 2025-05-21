@@ -1,10 +1,7 @@
-package dev.cosgy.textToSpeak.settings.user
+package dev.cosgy.textToSpeak.user
 
-import dev.cosgy.textToSpeak.settings.guild.Guild
-import net.dv8tion.jda.api.requests.Route
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.jdbc.Database
-import org.jetbrains.exposed.v1.jdbc.insert
 import org.jetbrains.exposed.v1.jdbc.select
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import org.jetbrains.exposed.v1.jdbc.upsert

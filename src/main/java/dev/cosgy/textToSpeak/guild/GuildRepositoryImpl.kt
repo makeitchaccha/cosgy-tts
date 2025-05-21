@@ -1,4 +1,4 @@
-package dev.cosgy.textToSpeak.settings.guild
+package dev.cosgy.textToSpeak.guild
 
 import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.v1.jdbc.Database

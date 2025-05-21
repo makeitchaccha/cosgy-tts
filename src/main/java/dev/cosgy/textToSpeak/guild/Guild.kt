@@ -1,4 +1,4 @@
-package dev.cosgy.textToSpeak.settings.guild
+package dev.cosgy.textToSpeak.guild
 
 class Guild(
     val id: Long,

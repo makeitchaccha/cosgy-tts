@@ -1,4 +1,4 @@
-package dev.cosgy.textToSpeak.settings.user
+package dev.cosgy.textToSpeak.user
 
 interface UserRepository {
     suspend fun findById(id: Long): User?
