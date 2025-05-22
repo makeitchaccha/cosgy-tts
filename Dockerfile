@@ -14,7 +14,7 @@ RUN mvn install -DskipTests
 FROM eclipse-temurin:21-jre-jammy AS base
 WORKDIR /app
 
-# OpenJTalk（辞書と音声データなし）
+# OpenJTalk only, no dictionaries and voice models.
 RUN apt-get update && apt-get install -y \
     open-jtalk \
     && rm -rf /var/lib/apt/lists/*
